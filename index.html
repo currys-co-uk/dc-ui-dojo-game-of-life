@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<script src="index.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://localhost:8080/webpack-dev-server.js"></script>		
+<head>
+	<link href="style.css" rel="stylesheet"/>
 
-	</head>
-	<body>		
-		<h1>game of life</h1>
-	</body>
+	<script src="src/index.js" type="text/javascript" charset="utf-8"></script>
+	<script src="http://localhost:8080/webpack-dev-server.js"></script>
+
+</head>
+<body>
+<h1 class="heading">game of life</h1>
+<div id="game">
+
+</div>
+<div class="btn-set">
+	<div class="btn btn--start" id="start">Start</div>
+	<div class="btn btn--stop" id="stop">Stop</div>
+	<div class="btn btn--next" id="step">Next step</div>
+</div>
+</body>
 </html>

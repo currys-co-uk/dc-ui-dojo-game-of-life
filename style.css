@@ -1,0 +1,75 @@
+body{
+    font-family: sans-serif;
+    width: 413px;
+    margin: 0 auto;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+table{
+    width: auto;
+    margin: 50px auto;
+}
+td{
+    padding: 5px;
+}
+.heading{
+    text-transform: uppercase;
+    text-align: center;
+    width: 411px;
+}
+#game{
+    display: inline-block;
+    vertical-align: top;
+    width: 411px;
+    border: 1px outset lightgray;
+    margin-bottom: 10px;
+}
+.btn-set{
+    display: inline-block;
+    vertical-align: top;
+    width: 413px;
+    text-align: center;
+}
+.btn{
+    background: transparent;
+    text-transform: uppercase;
+    font-size: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    -webkit-transition: color 0.3s ease, background 0.3s ease;
+    -ms-transition: color 0.3s ease, background 0.3s ease;
+    transition: color 0.3s ease, background 0.3s ease;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    width: 100px;
+}
+.btn:hover{
+    color: white;
+}
+.btn--start{
+    border: 2px solid forestgreen;
+    color: forestgreen;
+}
+.btn--start:hover{
+    background: forestgreen;
+}
+.btn--stop{
+    border: 2px solid darkred;
+    color: darkred;
+}
+.btn--stop:hover{
+    background: darkred;
+}
+.btn--next{
+    border: 2px solid #ffa33a;
+    color: #ffa33a;
+}
+.btn--next:hover{
+    background: #ffa33a;
+}
