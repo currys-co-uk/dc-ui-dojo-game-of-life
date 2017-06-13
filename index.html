@@ -3,7 +3,7 @@
 <head>
 	<link href="style.css" rel="stylesheet"/>
 
-	<script src="src/index.js" type="text/javascript" charset="utf-8"></script>
+	<script src="index.js" type="text/javascript" charset="utf-8"></script>
 	<script src="http://localhost:8080/webpack-dev-server.js"></script>
 
 </head>
@@ -16,6 +16,17 @@
 	<div class="btn btn--start" id="start">Start</div>
 	<div class="btn btn--stop" id="stop">Stop</div>
 	<div class="btn btn--next" id="step">Next step</div>
+	<div class="btn btn--new" id="pop-up">New board</div>
+</div>
+<div class="modal__wrap">
+	<div class="modal">
+		<h2 class="modal__heading">Select size</h2>
+		<div class="modal__inputs">
+			<label class="modal__label">X:</label><input placeholder="max 20" min="3" max="20" value="20" class="modal__input" type="number" />
+			<label class="modal__label">Y:</label><input placeholder="max 20" min="3" max="20" value="20" class="modal__input" type="number" />
+		</div>
+		<div class="btn btn--new" id="new-board">Submit</div>
+	</div>
 </div>
 </body>
 </html>
