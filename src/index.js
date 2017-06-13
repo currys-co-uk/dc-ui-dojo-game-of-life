@@ -1,12 +1,13 @@
 import gameOfLife from './gameOfLife';
 import { arrayify } from './helpers';
-//
+
 window.addEventListener('load', () => {
     const start = document.getElementById('start');
     const stop = document.getElementById('stop');
     const step = document.getElementById('step');
     const popUp = document.getElementById('pop-up');
     const newBoard = document.getElementById('new-board');
+    const random = document.getElementById('random');
     let iter;
     let array = arrayify(`
       0010 0100
@@ -29,7 +30,6 @@ window.addEventListener('load', () => {
     });
 
     step.addEventListener('click', () => {
-        console.log(array);
         array = gameOfLife(array);
         updateTable(array);
     });
@@ -42,25 +42,46 @@ window.addEventListener('load', () => {
         array = setNewArray();
     });
 
+    random.addEventListener('click', () => {
+        let newArray = createRandomArray(array);
+        removeTable();
+        createTable(newArray);
+    });
+
     window.addEventListener('click', function(e) {
         const target = e.target;
         if(target.nodeName === 'TD') {
-            const cellIndex  = target.cellIndex;
-            const rowIndex  = target.parentNode.rowIndex;
+            const cellIndex = target.cellIndex;
+            const rowIndex = target.parentNode.rowIndex;
             target.style.background = '#000';
-            array[rowIndex][cellIndex] = "1";
+            array[rowIndex][cellIndex] = '1';
         }
     });
 
 });
 
 /**
+ * Fill array with random values
+ * @param {Array} array Previous array
+ * @return {Array} array Array filled with new values
+ */
+function createRandomArray(array) {
+    for (let i = 0; i < array.length; i += 1) {
+        for (let j = 0; j < array[i].length; j += 1) {
+            array[i][j] = Math.round(Math.random()).toString();
+        }
+    }
+
+    return array;
+}
+
+/**
  * Opens New Board dialog
  */
 function openModal(){
-    const modal = document.getElementsByClassName("modal__wrap")[0];
+    const modal = document.getElementsByClassName('modal__wrap')[0];
 
-    modal.className += " open";
+    modal.className += ' open';
 }
 /**
  * Updates 2D table with new array
