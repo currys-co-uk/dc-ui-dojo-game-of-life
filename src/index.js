@@ -8,6 +8,7 @@ window.addEventListener('load', () => {
     const popUp = document.getElementById('pop-up');
     const newBoard = document.getElementById('new-board');
     const random = document.getElementById('random');
+    let mouseIsDown = false;
     let iter;
     let array = arrayify(`
       0010 0100
@@ -48,15 +49,27 @@ window.addEventListener('load', () => {
         createTable(newArray);
     });
 
-    window.addEventListener('click', function(e) {
-        const target = e.target;
-        if(target.nodeName === 'TD') {
-            const cellIndex = target.cellIndex;
-            const rowIndex = target.parentNode.rowIndex;
-            target.style.background = '#000';
-            array[rowIndex][cellIndex] = '1';
+    function draw(e) {
+        if (mouseIsDown === false) {
+            return;
+        } else {
+            const target = e.target;
+            if(target.nodeName === 'TD') {
+                const cellIndex = target.cellIndex;
+                const rowIndex = target.parentNode.rowIndex;
+                target.style.background = '#000';
+                array[rowIndex][cellIndex] = '1';
+            }
         }
+    }
+
+    window.addEventListener('mousedown', function (e) {
+        mouseIsDown = true;
+        draw(e);
+        console.log(mouseIsDown);
     });
+    window.addEventListener('mouseup', function () { mouseIsDown = false; });
+    window.addEventListener('mousemove', draw);
 
 });
 
