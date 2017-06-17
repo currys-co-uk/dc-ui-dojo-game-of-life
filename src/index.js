@@ -110,7 +110,7 @@ function createRandomArray(array) {
 /**
  * Opens New Board dialog
  */
-function openModal(){
+function openModal() {
     const modal = document.getElementsByClassName('modal__wrap')[0];
 
     modal.className += ' open';
@@ -131,7 +131,7 @@ function updateTable(array) {
                     td.dataset.color = 3;
                 }else{
                     td.style.background = setColor(td.dataset.color, 1);
-                    if(td.dataset.color != 6) {
+                    if(td.dataset.color < 6) {
                         td.dataset.color = parseInt(td.dataset.color) + 1;
                     }
                 }
@@ -152,11 +152,11 @@ function updateTable(array) {
 
 /**
  * Generates color from color scheme
- * @param item Current item with preset color
+ * @param item Present color
  * @param position -1 returns brighter color 1 returns darker color
  * @returns {string} Hex color
  */
-function setColor(item, position) {
+export function setColor(item, position) {
     const color = ['#e4e6fc', '#bcc0f7', '#949bf3', '#6d75d8', '#494e90', '#242748', '#0c0d18'];
     if(color[parseInt(item) + position] < 0) { return color[0]; }
     if(color[parseInt(item) + position] > 6) { return color[6]; }
@@ -167,7 +167,7 @@ function setColor(item, position) {
  * Creates table and appends it to #game
  * @param {Array} array
  */
-function createTable(array) {
+export function createTable(array) {
     const color = ['#e4e6fc', '#bcc0f7', '#949bf3', '#6d75d8', '#494e90', '#242748', '#0c0d18'];
     const board = document.createElement('table');
     const tbody = document.createElement('tbody');
@@ -210,7 +210,7 @@ function empty2dArray(x,y) {
 /**
  * Clear shown table
  */
-function removeTable() {
+export function removeTable() {
     const oldTable = document.getElementsByTagName('table')[0];
     oldTable.remove();
 }
