@@ -31,7 +31,9 @@ window.addEventListener('load', () => {
     });
 
     step.addEventListener('click', () => {
+        console.log(array);
         array = gameOfLife(array);
+        console.log(array);
         updateTable(array);
     });
 
@@ -49,29 +51,46 @@ window.addEventListener('load', () => {
         createTable(newArray);
     });
 
-    function draw(e) {
+    function draw(e, process) {
         const color = ['#e4e6fc', '#bcc0f7', '#949bf3', '#6d75d8', '#494e90', '#242748', '#0c0d18'];
         if (mouseIsDown === false) {
-            return;
+            return false;
         } else {
             const target = e.target;
             if(target.nodeName === 'TD') {
                 const cellIndex = target.cellIndex;
                 const rowIndex = target.parentNode.rowIndex;
-                target.style.background = color[3];
-                target.dataset.color = 3;
-                array[rowIndex][cellIndex] = '1';
+                if(process === 'add') {
+                    target.style.background = color[3];
+                    target.dataset.color = 3;
+                    array[rowIndex][cellIndex] = '1';
+                } else if (process === 'remove') {
+                    target.style.background = color[0];
+                    target.dataset.color = 0;
+                    array[rowIndex][cellIndex] = '0';
+                }
+                return false;
             }
         }
     }
 
     window.addEventListener('mousedown', function (e) {
-        mouseIsDown = true;
-        draw(e);
+        if(e.which === 1) {
+            mouseIsDown = true;
+            draw(e, 'add');
+        }else if(e.which === 3) {
+            mouseIsDown = true;
+            draw(e, 'remove');
+        }
     });
     window.addEventListener('mouseup', function () { mouseIsDown = false; });
-    window.addEventListener('mousemove', draw);
-
+    window.addEventListener('mousemove', function (e) {
+        if(e.which === 1) {
+            draw(e, 'add');
+        }else if(e.which === 3) {
+            draw(e, 'remove');
+        }
+    });
 });
 
 /**
