@@ -1,3 +1,4 @@
+// test
 export default function gameOfLife(inputBoard) {
   const outputBoard = inputBoard.map((row, x) => {
       return row.map((cell, y) => {
