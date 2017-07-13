@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src="index.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://localhost:8080/webpack-dev-server.js"></script>		
-
+    <script src="http://localhost:8080/webpack-dev-server.js"></script>
 	</head>
-	<body>		
-		<h1>game of life</h1>
+		<h2>Game of life</h2>
+		<div>
+			<button id="startButton">start</button>
+			<button  id="overButton">stop</button>
+		</div>
+		<canvas id="playBoard" width="300" height="300"></canvas>
+		<script src="index.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 </html>

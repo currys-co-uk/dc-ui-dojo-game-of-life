@@ -1,10 +1,10 @@
 import expect from 'expect';
 
-import gameOfLife, {countLivingNeighbors} from './gameOfLife.js';
+import gameOfLife, { countLivingNeighbors } from './gameOfLife.js';
 
 describe('gameOfLife', () => {
   it('accept two dimensional array', () => {
-    var input = [
+    const input = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -14,12 +14,12 @@ describe('gameOfLife', () => {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     ];
 
-    var output = gameOfLife(input);
+    const output = gameOfLife(input);
 
-    var expectedOutput = [
+    const expectedOutput = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -29,14 +29,14 @@ describe('gameOfLife', () => {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     ];
 
     expect(output).toEqual(expectedOutput);
   });
 
-    it('Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.', () => {
-        var input = [
+  it('Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.', () => {
+    const input = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -46,12 +46,12 @@ describe('gameOfLife', () => {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        ];
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
 
-        var output = gameOfLife(input);
+    const output = gameOfLife(input);
 
-        var expectedOutput = [
+    const expectedOutput = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -61,14 +61,14 @@ describe('gameOfLife', () => {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        ];
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
 
-        expect(output).toEqual(expectedOutput);
-    });
+    expect(output).toEqual(expectedOutput);
+  });
 
-    it('Any live cell with two or three live neighbours lives on to the next generation.', () => {
-        var input = [
+  it('Any live cell with two or three live neighbours lives on to the next generation.', () => {
+    const input = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
@@ -78,12 +78,12 @@ describe('gameOfLife', () => {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        ];
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
 
-        var output = gameOfLife(input);
+    const output = gameOfLife(input);
 
-        var expectedOutput = [
+    const expectedOutput = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
             [0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
@@ -93,14 +93,14 @@ describe('gameOfLife', () => {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        ];
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
 
-        expect(output).toEqual(expectedOutput);
-    });
+    expect(output).toEqual(expectedOutput);
+  });
 
-    it('Any live cell with more than three live neighbours dies, as if by overpopulation.', () => {
-        var input = [
+  it('Any live cell with more than three live neighbours dies, as if by overpopulation.', () => {
+    const input = [
             [1, 0, 1, 0, 0, 0, 0, 0, 0, 0],
             [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
@@ -110,12 +110,12 @@ describe('gameOfLife', () => {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        ];
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
 
-        var output = gameOfLife(input);
+    const output = gameOfLife(input);
 
-        var expectedOutput = [
+    const expectedOutput = [
             [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
@@ -125,13 +125,13 @@ describe('gameOfLife', () => {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        ];
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
 
-        expect(output).toEqual(expectedOutput);
-    });
-    it('Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.', () => {
-        var input = [
+    expect(output).toEqual(expectedOutput);
+  });
+  it('Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.', () => {
+    const input = [
             [1, 0, 1, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
@@ -141,12 +141,12 @@ describe('gameOfLife', () => {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        ];
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
 
-        var output = gameOfLife(input);
+    const output = gameOfLife(input);
 
-        var expectedOutput = [
+    const expectedOutput = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -156,19 +156,17 @@ describe('gameOfLife', () => {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        ];
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
 
-        expect(output).toEqual(expectedOutput);
-    });
+    expect(output).toEqual(expectedOutput);
+  });
 });
 
 
-
-
 describe('countNeighbours', () => {
-    it('count neighbours', () => {
-        var input = [
+  it('count neighbours', () => {
+    const input = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -178,18 +176,18 @@ describe('countNeighbours', () => {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        ];
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
 
-        var output = countLivingNeighbors(1, 1, input);
+    const output = countLivingNeighbors(1, 1, input);
 
-        var expectedOutput = 0;
+    const expectedOutput = 0;
 
-        expect(output).toEqual(expectedOutput);
-    });
+    expect(output).toEqual(expectedOutput);
+  });
 
-    it('count neighbours', () => {
-        var input = [
+  it('count neighbours', () => {
+    const input = [
             [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
             [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
             [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
@@ -199,18 +197,18 @@ describe('countNeighbours', () => {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        ];
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
 
-        var output = countLivingNeighbors(1, 1, input);
+    const output = countLivingNeighbors(1, 1, input);
 
-        var expectedOutput = 8;
+    const expectedOutput = 8;
 
-        expect(output).toEqual(expectedOutput);
-    });
+    expect(output).toEqual(expectedOutput);
+  });
 
-    it('count neighbours', () => {
-        var input = [
+  it('count neighbours', () => {
+    const input = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -220,18 +218,18 @@ describe('countNeighbours', () => {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        ];
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
 
-        var output = countLivingNeighbors(1, 1, input);
+    const output = countLivingNeighbors(1, 1, input);
 
-        var expectedOutput = 2;
+    const expectedOutput = 2;
 
-        expect(output).toEqual(expectedOutput);
-    });
+    expect(output).toEqual(expectedOutput);
+  });
 
-    it('count neighbours', () => {
-        var input = [
+  it('count neighbours', () => {
+    const input = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -241,13 +239,13 @@ describe('countNeighbours', () => {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        ];
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
 
-        var output = countLivingNeighbors(1, 1, input);
+    const output = countLivingNeighbors(1, 1, input);
 
-        var expectedOutput = 2;
+    const expectedOutput = 2;
 
-        expect(output).toEqual(expectedOutput);
-    });
-})
+    expect(output).toEqual(expectedOutput);
+  });
+});
