@@ -26,32 +26,42 @@ playground.addEventListener("click", () => {
     console.log(canvasX,canvasY)
 })
 
+initBoard()
+
+// init board
+function initBoard() {
+    for(let i=0;i<=270;i+=30) {
+        for(let j=0;j<=270;j+=30) {    
+            boarddimension.lineWidth = 0.5;
+            boarddimension.fillStyle = '#fff'    
+            boarddimension.strokeRect(i, j, 30, 30)  
+        }
+    }
+}
+
 // fill cell
 function fillCell(xaxis, yaxis, value) {
-    boarddimension.strokeRect(xaxis, yaxis, 30, 30)
-    boarddimension.strokeStyle = "#555"
     if (value == 1) {
-        boarddimension.fillRect(xaxis, yaxis, 30, 30)
         boarddimension.fillStyle = '#555'
-    } else {
         boarddimension.fillRect(xaxis, yaxis, 30, 30)
+    } else {
         boarddimension.fillStyle = '#fff'
+        boarddimension.fillRect(xaxis, yaxis, 30, 30)
     }
 }
 
 // Clear fields
 function clearFields() {
-    fillCell(0, 0, 0)
     for(a = 0; a <= 270; a+=30) {
         for (b = 0; b <= 270; b += 30) {
             fillCell(a, b, 0)
         }
     }
+    initBoard()
 }
 
 // fill fields
 function fillFields() {
-    clearFields()
     //  render cells
     const actualBoard = new Array(10)
     for (a = 0; a <= 270; a += 30) {
@@ -71,6 +81,7 @@ function fillFields() {
             fillCell(a, b, actualBoard[a][b])
         }
     }
+    initBoard()
 }
 
 // start game
