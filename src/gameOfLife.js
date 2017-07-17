@@ -2,41 +2,52 @@
 
 const playground = document.getElementById('playBoard'); // canvas element
 const boarddimension = playground.getContext('2d'); // dimension
-playground.style.border = '0.5px solid #555';
+playground.style.border = '0.5px solid #1F2E40';
 
-let a, b, value
-
-const selectCell = () => {
-    // get coordinates of click over canvas
-    playground.addEventListener("click", () => {
-        var totalOffsetX = 0;
-        var totalOffsetY = 0;
-        var canvasX = 0;
-        var canvasY = 0;
-        var currentElement = document.getElementById('playBoard');
-
-        do{
-            totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
-            totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
-        }
-        while(currentElement = currentElement.offsetParent)
-
-        canvasX = event.pageX - totalOffsetX;
-        canvasY = event.pageY - totalOffsetY;
-
-        console.log(canvasX,canvasY)
-    })
-}
+let a, b, value, axisX, axisY, roundedX, roundedY, currentBoard
 
 initGrid()
+selectCell()
 
+function selectCell() {
+    // get coordinates of click over canvas
+    playground.addEventListener("click", () => {
+        let totalOffsetX = 0
+        let totalOffsetY = 0
+        let axisX = 0
+        let axisY = 0
+        let currentElement = document.getElementById('playBoard')
+
+        do {
+            totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft
+            totalOffsetY += currentElement.offsetTop - currentElement.scrollTop
+        }
+        while (currentElement = currentElement.offsetParent)
+
+        axisX = event.pageX - totalOffsetX
+        axisY = event.pageY - totalOffsetY
+        roundedX = Math.floor(axisX)
+        roundedY = Math.floor(axisY)
+
+        while (roundedX % 30 != 0) {
+            roundedX--
+        }
+        while (roundedY % 30 != 0) {
+            roundedY--
+        }
+        fillCell(roundedX, roundedY, 1)
+
+        return currentBoard
+    })
+}
 // init grid
 function initGrid() {
     for(let i=0;i<=270;i+=30) {
-        for(let j=0;j<=270;j+=30) {    
-            boarddimension.lineWidth = 0.5;
-            boarddimension.fillStyle = '#fff'    
-            boarddimension.strokeRect(i, j, 30, 30)  
+        for(let j=0;j<=270;j+=30) {
+            boarddimension.lineWidth = 1;
+            boarddimension.fillStyle = '#1F2E40'
+            boarddimension.strokeStyle = '#1F2E40'
+            boarddimension.strokeRect(i, j, 30, 30)
         }
     }
 }
@@ -44,11 +55,11 @@ function initGrid() {
 // fill cell
 function fillCell(xaxis, yaxis, value) {
     if (value == 1) {
-        boarddimension.fillStyle = '#555'
-        boarddimension.fillRect(xaxis, yaxis, 30, 30)
+        boarddimension.fillStyle = '#1F2E40'
+        boarddimension.fillRect(xaxis, yaxis, 28, 28)
     } else if(value == 0) {
         boarddimension.fillStyle = '#fff'
-        boarddimension.fillRect(xaxis, yaxis, 30, 30)
+        boarddimension.fillRect(xaxis, yaxis, 28, 28)
     }
 }
 
@@ -62,35 +73,9 @@ function clearFields() {
     initGrid()
 }
 
-// fill fields
-function fillFields() {
-    //  render cells
-    const actualBoard = new Array(10)
-    
-    for (a = 0; a <= 270; a += 30) {
-        actualBoard[a] = new Array(10)
-        for (b = 0; b <= 270; b += 30) {
-            if (a == 120 && b == 120) {
-                actualBoard[a][b] = 1
-            } else {
-                actualBoard[a][b] = 0
-            }
-        }
-    }
-
-    // render fields
-    for (a = 0; a <= 270; a += 30) {
-        for (b = 0; b <= 270; b += 30) {
-            fillCell(a, b, actualBoard[a][b])
-        }
-    }
-    
-    initGrid()
-}
-
 // start game
 function gameStart() {
-    fillFields()
+    gameOfLife(currentBoard)
 }
 
 // controls
@@ -124,7 +109,28 @@ export function countLivingNeighbors(x, y, inputBoard) {
 }
 
 export default function gameOfLife(inputBoard) {
-  const outputBoard = inputBoard.map((row, x) => row.map((cell, y) => {
+    if(typeof(inputBoard) == 'undefined') {
+        inputBoard = []
+        for (a = 0; a <= 9; a++) {
+            inputBoard[a] = []
+            for (b = 0; b <= 9; b++) {
+                inputBoard[a][b] = Math.round(Math.random())
+            }
+        }
+    }
+
+    for(let i=0;i<10;i++) {
+        for(let j=0;j<10;j++) {
+            if(i && j == 0) {
+                fillCell(0, 0, inputBoard[0][0])
+            } else {
+                fillCell(i*30, j*30, inputBoard[i][j])
+            }
+        }
+    }
+    initGrid()
+
+    const outputBoard = inputBoard.map((row, x) => row.map((cell, y) => {
     const living = countLivingNeighbors(x, y, inputBoard);
     if (cell === 1) {
       if (living < 2) { return 0; }
@@ -136,7 +142,9 @@ export default function gameOfLife(inputBoard) {
     }
 
     return cell;
-  }));
+    }));
+
+    console.log(outputBoard)
 
   return outputBoard;
 }
