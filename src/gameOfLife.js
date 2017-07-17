@@ -6,30 +6,32 @@ playground.style.border = '0.5px solid #555';
 
 let a, b, value
 
-// get coordinates of click over canvas
-playground.addEventListener("click", () => {
-    var totalOffsetX = 0;
-    var totalOffsetY = 0;
-    var canvasX = 0;
-    var canvasY = 0;
-    var currentElement = document.getElementById('playBoard');
+const selectCell = () => {
+    // get coordinates of click over canvas
+    playground.addEventListener("click", () => {
+        var totalOffsetX = 0;
+        var totalOffsetY = 0;
+        var canvasX = 0;
+        var canvasY = 0;
+        var currentElement = document.getElementById('playBoard');
 
-    do{
-        totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
-        totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
-    }
-    while(currentElement = currentElement.offsetParent)
+        do{
+            totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
+            totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
+        }
+        while(currentElement = currentElement.offsetParent)
 
-    canvasX = event.pageX - totalOffsetX;
-    canvasY = event.pageY - totalOffsetY;
+        canvasX = event.pageX - totalOffsetX;
+        canvasY = event.pageY - totalOffsetY;
 
-    console.log(canvasX,canvasY)
-})
+        console.log(canvasX,canvasY)
+    })
+}
 
-initBoard()
+initGrid()
 
-// init board
-function initBoard() {
+// init grid
+function initGrid() {
     for(let i=0;i<=270;i+=30) {
         for(let j=0;j<=270;j+=30) {    
             boarddimension.lineWidth = 0.5;
@@ -44,7 +46,7 @@ function fillCell(xaxis, yaxis, value) {
     if (value == 1) {
         boarddimension.fillStyle = '#555'
         boarddimension.fillRect(xaxis, yaxis, 30, 30)
-    } else {
+    } else if(value == 0) {
         boarddimension.fillStyle = '#fff'
         boarddimension.fillRect(xaxis, yaxis, 30, 30)
     }
@@ -57,13 +59,14 @@ function clearFields() {
             fillCell(a, b, 0)
         }
     }
-    initBoard()
+    initGrid()
 }
 
 // fill fields
 function fillFields() {
     //  render cells
     const actualBoard = new Array(10)
+    
     for (a = 0; a <= 270; a += 30) {
         actualBoard[a] = new Array(10)
         for (b = 0; b <= 270; b += 30) {
@@ -77,11 +80,12 @@ function fillFields() {
 
     // render fields
     for (a = 0; a <= 270; a += 30) {
-        for (b = 30; b <= 270; b += 30) {
+        for (b = 0; b <= 270; b += 30) {
             fillCell(a, b, actualBoard[a][b])
         }
     }
-    initBoard()
+    
+    initGrid()
 }
 
 // start game
