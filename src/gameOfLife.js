@@ -4,13 +4,14 @@ const playground = document.getElementById('playBoard'); // canvas element
 const boarddimension = playground.getContext('2d'); // dimension
 playground.style.border = '0.5px solid #1F2E40';
 
-let a, b, value, axisX, axisY, roundedX, roundedY, currentBoard
+let a, b, value, axisX, axisY, roundedX, roundedY, currentBoard, state
 
-initGrid()
-selectCell()
+(function() {
+    initGrid()
+})();
 
+// selectCell
 function selectCell() {
-    // get coordinates of click over canvas
     playground.addEventListener("click", () => {
         let totalOffsetX = 0
         let totalOffsetY = 0
@@ -37,9 +38,25 @@ function selectCell() {
         }
         fillCell(roundedX, roundedY, 1)
 
-        return currentBoard
+        if (roundedX || roundedY != 0) {
+            roundedX /= 30;
+            roundedY /= 30;
+        }
+        currentBoard[roundedX][roundedY] = 1
     })
 }
+
+// fill cell
+function fillCell(xaxis, yaxis, value) {
+    if (value == 1) {
+        boarddimension.fillStyle = '#1F2E40'
+        boarddimension.fillRect(xaxis, yaxis, 29, 29)
+    } else if(value == 0) {
+        boarddimension.fillStyle = '#fff'
+        boarddimension.fillRect(xaxis, yaxis, 29, 29)
+    }
+}
+
 // init grid
 function initGrid() {
     for(let i=0;i<=270;i+=30) {
@@ -47,26 +64,15 @@ function initGrid() {
             boarddimension.lineWidth = 1;
             boarddimension.fillStyle = '#1F2E40'
             boarddimension.strokeStyle = '#1F2E40'
-            boarddimension.strokeRect(i, j, 30, 30)
+            boarddimension.strokeRect(i, j, 29, 29)
         }
-    }
-}
-
-// fill cell
-function fillCell(xaxis, yaxis, value) {
-    if (value == 1) {
-        boarddimension.fillStyle = '#1F2E40'
-        boarddimension.fillRect(xaxis, yaxis, 28, 28)
-    } else if(value == 0) {
-        boarddimension.fillStyle = '#fff'
-        boarddimension.fillRect(xaxis, yaxis, 28, 28)
     }
 }
 
 // Clear fields
 function clearFields() {
-    for(a = 0; a <= 270; a+=30) {
-        for (b = 0; b <= 270; b += 30) {
+    for(let a=0;a<=270;a+=30) {
+        for(let b=0;b<=270;b+=30) {
             fillCell(a, b, 0)
         }
     }
@@ -75,7 +81,7 @@ function clearFields() {
 
 // start game
 function gameStart() {
-    gameOfLife(currentBoard)
+    state = setInterval(gameOfLife(currentBoard, 500))
 }
 
 // controls
@@ -83,7 +89,19 @@ document.getElementById('startButton').addEventListener("click", function(e){
     gameStart()
 })
 document.getElementById('overButton').addEventListener("click", function(e){
+    clearInterval(state);
     clearFields()
+})
+document.getElementById('selectMode').addEventListener("click", function(e){
+    clearFields()
+    currentBoard = []
+     for(let i = 0; i < 10; i++) {
+         currentBoard[i] = []
+         for (let j = 0; j < 10; j++) {
+            currentBoard[i][j] = 0
+         }
+     }
+    selectCell()
 })
 
 // finally rendering
@@ -109,7 +127,7 @@ export function countLivingNeighbors(x, y, inputBoard) {
 }
 
 export default function gameOfLife(inputBoard) {
-    if(typeof(inputBoard) == 'undefined') {
+    if (typeof inputBoard == 'undefined') {
         inputBoard = []
         for (a = 0; a <= 9; a++) {
             inputBoard[a] = []
@@ -118,17 +136,6 @@ export default function gameOfLife(inputBoard) {
             }
         }
     }
-
-    for(let i=0;i<10;i++) {
-        for(let j=0;j<10;j++) {
-            if(i && j == 0) {
-                fillCell(0, 0, inputBoard[0][0])
-            } else {
-                fillCell(i*30, j*30, inputBoard[i][j])
-            }
-        }
-    }
-    initGrid()
 
     const outputBoard = inputBoard.map((row, x) => row.map((cell, y) => {
     const living = countLivingNeighbors(x, y, inputBoard);
@@ -144,7 +151,11 @@ export default function gameOfLife(inputBoard) {
     return cell;
     }));
 
-    console.log(outputBoard)
-
-  return outputBoard;
+    for(a = 0; a < 10; a++) {
+        for (b = 0; b < 10; b++) {
+            fillCell(a*30, b*30, outputBoard[a][b])
+        }
+    }
+    currentBoard = outputBoard
+  return currentBoard;
 }
