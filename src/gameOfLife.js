@@ -2,9 +2,10 @@ const playground = document.getElementById('playBoard'); // canvas element
 const boarddimension = playground.getContext('2d'); // dimension
 playground.style.border = '0.5px solid #444';
 
-let a, b, value, axisX, axisY, roundedX, roundedY, currentBoard, time, selectMode, generations
+let a, b, value, axisX, axisY, roundedX, roundedY, currentBoard, time, selectMode, generations, stopCounter, zeroPoint
 
 (function() {
+    stopCounter = 0
     selectMode = false
     initGrid()
     selectCell()
@@ -60,7 +61,7 @@ function selectCell() {
 function fillCell(xaxis, yaxis, value) {
     if (value == 1) {
         boarddimension.fillStyle = '#444'
-        boarddimension.fillRect(xaxis, yaxis, 28, 28)
+        boarddimension.fillRect(xaxis, yaxis, 30, 30)
     } else if(value == 0) {
         boarddimension.fillStyle = '#fff'
         boarddimension.fillRect(xaxis, yaxis, 29, 29)
@@ -71,10 +72,10 @@ function fillCell(xaxis, yaxis, value) {
 function initGrid() {
     for(let i=0;i<=270;i+=30) {
         for(let j=0;j<=270;j+=30) {
-            boarddimension.lineWidth = 0.5;
+            boarddimension.lineWidth = 1;
             boarddimension.fillStyle = '#444'
             boarddimension.strokeStyle = '#444'
-            boarddimension.strokeRect(i, j, 29, 29)
+            boarddimension.strokeRect(i, j, 30, 30)
         }
     }
 }
@@ -101,15 +102,18 @@ function gameStart() {
         }
     }
 
+    stopCounter = 0
+
     time = setInterval(() => {
         generations++,
-        gameOfLife(currentBoard, generations),
+        gameOfLife(currentBoard),
         document.getElementById('generationCount').innerHTML = generations
-    }, 200)
+    }, 100)
 }
 
 // controls
 document.getElementById('startButton').addEventListener("click", function(e){
+    zeroPoint = false
     generations = 0
     gameStart(generations)
 })
@@ -141,9 +145,11 @@ export function countLivingNeighbors(x, y, inputBoard) {
 }
 
 export default function gameOfLife(inputBoard) {
+    let sum = 0
     const outputBoard = inputBoard.map((row, x) => row.map((cell, y) => {
     const living = countLivingNeighbors(x, y, inputBoard);
     if (cell === 1) {
+      sum += cell
       if (living < 2) { return 0; }
       if (living > 3) {
         return 0;
@@ -157,9 +163,14 @@ export default function gameOfLife(inputBoard) {
 
     for(a = 0; a < 10; a++) {
         for (b = 0; b < 10; b++) {
-            fillCell(a*30, b*30, outputBoard[a][b])
+            fillCell(a * 30, b * 30, outputBoard[a][b])
+            if ((zeroPoint === true) && (sum === 0)) {
+                clearInterval(time);
+                clearFields()
+            }
         }
     }
+    zeroPoint = true
     currentBoard = outputBoard
   return currentBoard
 }
